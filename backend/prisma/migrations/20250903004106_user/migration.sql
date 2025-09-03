@@ -1,7 +1,7 @@
 -- CreateTable
-CREATE TABLE "public"."Users" (
+CREATE TABLE "public"."User" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(100) NOT NULL,
 
-    CONSTRAINT "Users_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

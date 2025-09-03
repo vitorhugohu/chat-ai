@@ -8,6 +8,7 @@ export class UsersService {
     constructor (private prisma: PrismaService) {}
 
     async create (data: UserDto) {
-        await this.prisma.onModuleInit((data));
+        const user = await this.prisma.user.create({ data });
+        return user;
     }
 }
