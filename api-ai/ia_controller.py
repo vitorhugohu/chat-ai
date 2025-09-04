@@ -8,7 +8,7 @@ app = FastAPI()
 def read_root():
     return("Hello: World")
 
-@app.get("/chat/{user, text}")
+@app.get("/chat/{user}/{text}")
 def chat(user, text):
     mensagem = generateChat(user, text)
     return mensagem

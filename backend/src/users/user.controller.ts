@@ -9,7 +9,6 @@ export class UserController {
 
     @Post()
     async create(@Body() data: UserDto) {
-        console.log(data)
         return this.usersService.create(data);
     }
 }

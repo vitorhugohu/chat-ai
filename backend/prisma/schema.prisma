@@ -16,4 +16,17 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
   name String @db.VarChar(100)
+
+  chats Chat[]
+}
+
+model Chat {
+  id Int @id @default(autoincrement())
+  userId Int
+  message String @db.VarChar(1000)
+  
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
