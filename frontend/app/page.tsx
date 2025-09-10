@@ -1,23 +1,42 @@
 "use client";
 
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Space, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
 import 'antd/dist/reset.css'; // estilos do AntD v5
 import { Button, Flex } from 'antd';
+import axios from 'axios';
 
 interface DataType {
-  key: string;
+  key: number;
   name: string;
-  age: number;
-  address: string;
-  tags: string[];
+  message: string;
+  userId?: number;
 }
 
-
-
 export default function Home() {
+
+  const url = 'http://localhost:5000/chat';
+  const [data, setData] = React.useState<DataType[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(url);
+        const tableData = response.data.map((item: any) => ({
+          key: item.id,
+          name: item.name,
+          message: item.message,
+        }));
+        setData(tableData);
+      } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+      }
+    }
+    fetchData();
+  }, []);
+
   const columns: TableProps<DataType>['columns'] = [
   {
     title: 'Nome',
@@ -26,9 +45,9 @@ export default function Home() {
     render: (text: string) => <a>{text}</a>,
   },
   {
-    title: 'Descrição',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Mensagem',
+    dataIndex: 'message',
+    key: 'message',
   },
   
   {
@@ -41,29 +60,7 @@ export default function Home() {
     ),
   },
 ];
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
+
 
   return (
     <>
@@ -77,9 +74,6 @@ const data: DataType[] = [
       
       </div>
       </div>
-      
-        
-      
       
     </>
   );

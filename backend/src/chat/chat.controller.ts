@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { ChatDto } from './dto/chat.dto';
 import { ChatService } from './chat.service';
 
@@ -6,6 +6,15 @@ import { ChatService } from './chat.service';
 export class ChatController {
     
     constructor (private readonly chatService: ChatService) {}
+
+    @Get()
+    async findAll() {
+        try {
+            return this.chatService.findAll();
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
 
     @Post()
     async create(@Body() data: ChatDto) {

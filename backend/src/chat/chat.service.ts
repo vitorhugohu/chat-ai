@@ -28,4 +28,10 @@ export class ChatService {
 
         return userName;
     }
+
+    async findAll() {
+        return this.prisma.chat.findMany({
+            include: { user: { select: { name: true } } }
+        });
+    }
 }
